@@ -9,10 +9,13 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@upstash/ratelimit": "^0.1.5",
+    "@upstash/redis": "^1.13.1",
     "next": "^12.3.1",
     "parse-favicon": "^5.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "rxjs": "^7.5.7",
     "zod": "^3.19.1"
   },
   "devDependencies": {
