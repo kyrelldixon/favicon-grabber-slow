@@ -1,33 +1,33 @@
-import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
-import { Ratelimit } from "@upstash/ratelimit";
-import { redis } from "@/lib/redis";
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
+import { Ratelimit } from '@upstash/ratelimit'
+import { redis } from '@/lib/redis'
 
 const ratelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(100, "10 s"),
-});
+  limiter: Ratelimit.slidingWindow(100, '10 s'),
+})
 
 export default async function middleware(
   request: NextRequest,
   event: NextFetchEvent,
 ): Promise<Response | undefined> {
-  const ip = request.ip ?? "127.0.0.1";
+  const ip = request.ip ?? '127.0.0.1'
 
   const { success, pending, limit, reset, remaining } = await ratelimit.limit(
     `mw_${ip}`,
-  );
-  event.waitUntil(pending);
+  )
+  event.waitUntil(pending)
 
   const res = success
     ? NextResponse.next(request)
-    : NextResponse.rewrite(new URL("/api/blocked", request.url), request);
+    : NextResponse.rewrite(new URL('/api/blocked', request.url), request)
 
-  res.headers.set("X-RateLimit-Limit", limit.toString());
-  res.headers.set("X-RateLimit-Remaining", remaining.toString());
-  res.headers.set("X-RateLimit-Reset", reset.toString());
-  return res;
+  res.headers.set('X-RateLimit-Limit', limit.toString())
+  res.headers.set('X-RateLimit-Remaining', remaining.toString())
+  res.headers.set('X-RateLimit-Reset', reset.toString())
+  return res
 }
 
 export const config = {
-  matcher: "/api/grab",
-};
+  matcher: '/api/grab',
+}

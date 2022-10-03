@@ -9,7 +9,6 @@ export default function Layout({
   children,
   title = 'This is the default title',
 }: LayoutProps) {
-
   return (
     <div>
       <Head>

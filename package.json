@@ -5,8 +5,11 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "stage": "yarn build; yarn start",
-    "type-check": "tsc"
+    "stage": "pnpm build; pnpm start",
+    "type-check": "tsc",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
+    "lint:fix": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --fix",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write"
   },
   "dependencies": {
     "@upstash/ratelimit": "^0.1.5",
@@ -28,6 +31,7 @@
     "eslint": "^8.24.0",
     "eslint-config-next": "^12.3.1",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "postcss": "^8.4.17",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
